@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Redemption Makosa</title>
+  <link rel="icon" href="makosa.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .page-header { padding: 140px clamp(24px,6vw,100px) 60px; border-bottom: 1px solid var(--border); }
+    .page-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; opacity:0; animation:fadeUp 0.5s ease forwards 0.1s; }
+    .page-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(40px,7vw,88px); line-height:1; letter-spacing:-0.03em; color:var(--text-primary); opacity:0; animation:fadeUp 0.6s ease forwards 0.2s; }
+    .about-body { display:grid; grid-template-columns:1fr 1fr; }
+    @media(max-width:760px){ .about-body{grid-template-columns:1fr;} }
+    .about-col { padding: 60px clamp(24px,6vw,100px); }
+    .about-col+.about-col { border-left:1px solid var(--border); }
+    @media(max-width:760px){ .about-col+.about-col{border-left:none;border-top:1px solid var(--border);} }
+    .col-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:28px; }
+    .bio-text { font-family:'DM Mono',monospace; font-size:13px; line-height:2; color:var(--text-secondary); }
+    .bio-text p+p { margin-top:20px; }
+    .bio-text strong { color:var(--text-primary); font-weight:500; }
+    .skills-list { display:flex; flex-direction:column; border:1px solid var(--border); }
+    .skill-row { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); transition:background 0.2s; }
+    .skill-row:last-child { border-bottom:none; }
+    .skill-row:hover { background:var(--surface); }
+    .skill-name { font-family:'Syne',sans-serif; font-weight:600; font-size:13px; color:var(--text-primary); }
+    .skill-level { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); }
+    .looking-section { padding:60px clamp(24px,6vw,100px); border-top:1px solid var(--border); }
+    .cards-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:32px; }
+    .info-card { background:var(--bg); padding:28px 24px; transition:background 0.2s; }
+    .info-card:hover { background:var(--surface); }
+    .info-card .ic-num { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-muted); margin-bottom:16px; }
+    .info-card .ic-title { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; color:var(--text-primary); margin-bottom:10px; }
+    .info-card .ic-desc { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-secondary); line-height:1.8; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);} }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">RM</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link active">About</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <p class="page-label">// Who I am</p>
+    <h1 class="page-title">About Me</h1>
+  </header>
+
+  <div class="about-body">
+    <div class="about-col">
+      <p class="col-label">// Background</p>
+      <div class="bio-text">
+        <p>I'm <strong>Redemption Makosa</strong>, a Computer Science student at the <strong>National University of Science and Technology (NUST)</strong> in Zimbabwe.</p>
+        <p>I entered university with a strong quantitative foundation — <strong>Pure Mathematics (A), Physics (B), Computer Science (C)</strong> at A-Level — and I'm channeling that into building scalable, practical software.</p>
+        <p>I translate systems thinking and mathematical rigour into clean, maintainable code. I move quickly from concept → prototype → iteration, and I thrive in high-stakes environments where the bar is set high.</p>
+        <p>Currently deepening my engineering fundamentals and building real products. Long-term goal: launch or join a high-growth startup that creates significant value.</p>
+      </div>
+    </div>
+    <div class="about-col">
+      <p class="col-label">// Skills</p>
+      <div class="skills-list">
+        <div class="skill-row"><span class="skill-name">HTML / CSS</span><span class="skill-level">Proficient</span></div>
+        <div class="skill-row"><span class="skill-name">JavaScript</span><span class="skill-level">Proficient</span></div>
+        <div class="skill-row"><span class="skill-name">Python</span><span class="skill-level">Proficient</span></div>
+        <div class="skill-row"><span class="skill-name">FastAPI</span><span class="skill-level">Learning</span></div>
+        <div class="skill-row"><span class="skill-name">React</span><span class="skill-level">Learning</span></div>
+        <div class="skill-row"><span class="skill-name">Data Structures & Algorithms</span><span class="skill-level">In Progress</span></div>
+        <div class="skill-row"><span class="skill-name">Systems Thinking</span><span class="skill-level">Strong</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="looking-section">
+    <p class="col-label">// What I'm looking for</p>
+    <div class="cards-row">
+      <div class="info-card"><div class="ic-num">01</div><div class="ic-title">Internships & Junior Roles</div><div class="ic-desc">Environments where I can contribute, ship features, and grow fast alongside experienced engineers.</div></div>
+      <div class="info-card"><div class="ic-num">02</div><div class="ic-title">Co-Founders & Early Teams</div><div class="ic-desc">People building in fintech, SaaS, or marketplace spaces who want a technically rigorous partner.</div></div>
+      <div class="info-card"><div class="ic-num">03</div><div class="ic-title">Mentors & Investors</div><div class="ic-desc">Those who value direct feedback, high ambition, and are serious about building long-term value.</div></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-copy">© 2024 Redemption Makosa</span>
+    <span class="footer-built">Built with intention.</span>
+  </footer>
+  <script>
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+  </script>
+</body>
+</html>

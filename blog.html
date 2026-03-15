@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Redemption Makosa</title>
+  <link rel="icon" href="makosa.png" type="image/png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .page-header { padding:140px clamp(24px,6vw,100px) 60px; border-bottom:1px solid var(--border); }
+    .page-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; opacity:0; animation:fadeUp 0.5s ease forwards 0.1s; }
+    .page-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(40px,7vw,88px); line-height:1; letter-spacing:-0.03em; color:var(--text-primary); opacity:0; animation:fadeUp 0.6s ease forwards 0.2s; }
+    .blog-section { padding:60px clamp(24px,6vw,100px); }
+    .loading { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-muted); }
+    .empty-state { font-family:'DM Mono',monospace; font-size:13px; color:var(--text-muted); padding:40px 0; border-top:1px solid var(--border); }
+    .post-item { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; padding:40px 0; border-bottom:1px solid var(--border); text-decoration:none; opacity:0; animation:fadeUp 0.5s ease forwards; }
+    .post-item:first-child { border-top:1px solid var(--border); }
+    .post-item:hover .post-arrow { transform:translate(4px,-4px); color:var(--text-primary); }
+    .post-tags { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+    .post-tag { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(201,169,110,0.3); padding:3px 8px; border-radius:2px; }
+    .post-title { font-family:'Syne',sans-serif; font-weight:700; font-size:clamp(20px,3vw,30px); color:var(--text-primary); margin-bottom:12px; letter-spacing:-0.02em; }
+    .post-excerpt { font-family:'DM Mono',monospace; font-size:12px; color:var(--text-secondary); line-height:1.9; max-width:600px; }
+    .post-date { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-muted); margin-top:14px; letter-spacing:0.08em; }
+    .post-arrow { font-size:20px; color:var(--text-muted); transition:transform 0.2s,color 0.2s; padding-top:4px; }
+    /* Single post view */
+    #post-view { display:none; padding:100px clamp(24px,6vw,100px) 60px; max-width:780px; }
+    .post-back { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-muted); text-decoration:none; letter-spacing:0.1em; display:inline-flex; align-items:center; gap:8px; margin-bottom:48px; transition:color 0.2s; }
+    .post-back:hover { color:var(--text-primary); }
+    .post-full-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(32px,5vw,56px); color:var(--text-primary); letter-spacing:-0.03em; margin-bottom:16px; line-height:1.1; }
+    .post-full-date { font-family:'DM Mono',monospace; font-size:11px; color:var(--text-muted); margin-bottom:48px; padding-bottom:40px; border-bottom:1px solid var(--border); }
+    .post-full-content { font-family:'DM Mono',monospace; font-size:13px; color:var(--text-secondary); line-height:2.1; white-space:pre-wrap; }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">RM</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- LIST VIEW -->
+  <div id="list-view">
+    <header class="page-header">
+      <p class="page-label">// Thoughts & notes</p>
+      <h1 class="page-title">Blog</h1>
+    </header>
+    <section class="blog-section">
+      <div id="posts-container"><p class="loading">Loading posts…</p></div>
+    </section>
+  </div>
+
+  <!-- SINGLE POST VIEW -->
+  <div id="post-view">
+    <a href="#" class="post-back" onclick="showList(); return false;">← Back to Blog</a>
+    <div class="post-tags" id="pv-tags"></div>
+    <h1 class="post-full-title" id="pv-title"></h1>
+    <p class="post-full-date" id="pv-date"></p>
+    <div class="post-full-content" id="pv-content"></div>
+  </div>
+
+  <footer class="footer">
+    <span class="footer-copy">© 2024 Redemption Makosa</span>
+    <span class="footer-built">Built with intention.</span>
+  </footer>
+
+  <script>
+    const API = 'https://your-api.vercel.app'; // ← REPLACE with your Vercel URL
+
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    async function loadPosts() {
+      const container = document.getElementById('posts-container');
+      try {
+        const res = await fetch(`${API}/blog`);
+        const posts = await res.json();
+        if (!posts.length) {
+          container.innerHTML = '<p class="empty-state">No posts yet. Check back soon.</p>';
+          return;
+        }
+        container.innerHTML = posts.map((p, i) => `
+          <a href="#" class="post-item" style="animation-delay:${i*0.1}s" onclick="openPost('${esc(p.slug)}'); return false;">
+            <div>
+              <div class="post-tags">${(p.tags||[]).map(t=>`<span class="post-tag">${esc(t)}</span>`).join('')}</div>
+              <h2 class="post-title">${esc(p.title)}</h2>
+              <p class="post-excerpt">${esc(p.excerpt)}</p>
+              <p class="post-date">${new Date(p.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</p>
+            </div>
+            <span class="post-arrow">↗</span>
+          </a>`).join('');
+      } catch(e) {
+        container.innerHTML = '<p class="empty-state">Could not load posts. API may not be connected yet.</p>';
+      }
+    }
+
+    async function openPost(slug) {
+      try {
+        const res = await fetch(`${API}/blog/${slug}`);
+        if (!res.ok) return;
+        const p = await res.json();
+        document.getElementById('pv-title').textContent = p.title;
+        document.getElementById('pv-date').textContent = new Date(p.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+        document.getElementById('pv-content').textContent = p.content;
+        document.getElementById('pv-tags').innerHTML = (p.tags||[]).map(t=>`<span class="post-tag">${esc(t)}</span>`).join('');
+        document.getElementById('list-view').style.display = 'none';
+        document.getElementById('post-view').style.display = 'block';
+        window.scrollTo(0,0);
+      } catch(e) {}
+    }
+
+    function showList() {
+      document.getElementById('post-view').style.display = 'none';
+      document.getElementById('list-view').style.display = 'block';
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>

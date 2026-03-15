@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Redemption Makosa</title>
+  <link rel="icon" href="makosa.png" type="image/png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    .page-header { padding:140px clamp(24px,6vw,100px) 60px; border-bottom:1px solid var(--border); }
+    .page-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; opacity:0; animation:fadeUp 0.5s ease forwards 0.1s; }
+    .page-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(40px,7vw,88px); line-height:1; letter-spacing:-0.03em; color:var(--text-primary); opacity:0; animation:fadeUp 0.6s ease forwards 0.2s; }
+    .contact-body { display:grid; grid-template-columns:1fr 1.4fr; }
+    @media(max-width:800px){ .contact-body{grid-template-columns:1fr;} }
+    .contact-info { padding:60px clamp(24px,6vw,80px); border-right:1px solid var(--border); }
+    @media(max-width:800px){ .contact-info{border-right:none;border-bottom:1px solid var(--border);} }
+    .contact-form-col { padding:60px clamp(24px,6vw,80px); }
+    .col-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:28px; }
+    .info-text { font-family:'DM Mono',monospace; font-size:13px; line-height:2; color:var(--text-secondary); margin-bottom:48px; }
+    .info-links { display:flex; flex-direction:column; gap:0; border:1px solid var(--border); }
+    .info-link { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; text-decoration:none; border-bottom:1px solid var(--border); transition:background 0.2s; }
+    .info-link:last-child { border-bottom:none; }
+    .info-link:hover { background:var(--surface); }
+    .info-link-left { display:flex; align-items:center; gap:14px; }
+    .info-link-left i { font-size:16px; color:var(--text-muted); width:20px; text-align:center; }
+    .info-link:hover i { color:var(--text-primary); }
+    .info-link-name { font-family:'Syne',sans-serif; font-weight:600; font-size:13px; color:var(--text-primary); }
+    .info-link-handle { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-muted); margin-top:2px; }
+    .info-link-arrow { font-size:12px; color:var(--text-muted); transition:transform 0.2s; }
+    .info-link:hover .info-link-arrow { transform:translateX(4px); color:var(--text-primary); }
+    /* Form */
+    .form-stack { display:flex; flex-direction:column; gap:20px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    @media(max-width:500px){ .form-row{grid-template-columns:1fr;} }
+    .field { display:flex; flex-direction:column; gap:8px; }
+    .field label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); }
+    .field input, .field textarea {
+      background:var(--surface); border:1px solid var(--border);
+      color:var(--text-primary); padding:12px 14px;
+      font-family:'DM Mono',monospace; font-size:13px; outline:none;
+      transition:border-color 0.2s; resize:vertical;
+    }
+    .field input:focus, .field textarea:focus { border-color:var(--accent); }
+    .field textarea { min-height:160px; }
+    .submit-row { display:flex; align-items:center; gap:20px; margin-top:8px; }
+    .btn-submit {
+      font-family:'Syne',sans-serif; font-weight:700; font-size:13px;
+      letter-spacing:0.06em; text-transform:uppercase; padding:14px 36px;
+      background:var(--text-primary); color:var(--bg); border:none; cursor:pointer;
+      transition:opacity 0.2s; flex-shrink:0;
+    }
+    .btn-submit:hover { opacity:0.85; }
+    .btn-submit:disabled { opacity:0.4; cursor:not-allowed; }
+    .form-status { font-family:'DM Mono',monospace; font-size:12px; }
+    .form-status.success { color:#52c87a; }
+    .form-status.error { color:#e05252; }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">RM</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="blog.html" class="nav-link">Blog</a>
+      <a href="contact.html" class="nav-link active">Contact</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <p class="page-label">// Get in touch</p>
+    <h1 class="page-title">Contact</h1>
+  </header>
+
+  <div class="contact-body">
+    <!-- Left: info -->
+    <div class="contact-info">
+      <p class="col-label">// Direct links</p>
+      <p class="info-text">Open to internships, junior roles, co-founder conversations, and mentorship. Reach out directly or use the form.</p>
+      <div class="info-links">
+        <a href="mailto:redeemmakosa05@gmail.com" class="info-link">
+          <div class="info-link-left">
+            <i class="fa-solid fa-envelope"></i>
+            <div><div class="info-link-name">Email</div><div class="info-link-handle">redeemmakosa05@gmail.com</div></div>
+          </div>
+          <span class="info-link-arrow">→</span>
+        </a>
+        <a href="https://github.com/Redeemmakosa05" class="info-link" target="_blank" rel="noopener">
+          <div class="info-link-left">
+            <i class="fa-brands fa-github"></i>
+            <div><div class="info-link-name">GitHub</div><div class="info-link-handle">Redeemmakosa05</div></div>
+          </div>
+          <span class="info-link-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/redemption-makosa/" class="info-link" target="_blank" rel="noopener">
+          <div class="info-link-left">
+            <i class="fa-brands fa-linkedin"></i>
+            <div><div class="info-link-name">LinkedIn</div><div class="info-link-handle">redemption-makosa</div></div>
+          </div>
+          <span class="info-link-arrow">→</span>
+        </a>
+        <a href="https://discord.com/users/RedemptionMakosa#0001" class="info-link" target="_blank" rel="noopener">
+          <div class="info-link-left">
+            <i class="fa-brands fa-discord"></i>
+            <div><div class="info-link-name">Discord</div><div class="info-link-handle">RedemptionMakosa</div></div>
+          </div>
+          <span class="info-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="contact-form-col">
+      <p class="col-label">// Send a message</p>
+      <div class="form-stack">
+        <div class="form-row">
+          <div class="field"><label>Name</label><input type="text" id="cf-name" placeholder="Your name"/></div>
+          <div class="field"><label>Email</label><input type="email" id="cf-email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="field"><label>Subject</label><input type="text" id="cf-subject" placeholder="What's this about?"/></div>
+        <div class="field"><label>Message</label><textarea id="cf-message" placeholder="Write your message here…"></textarea></div>
+        <div class="submit-row">
+          <button class="btn-submit" id="cf-submit" onclick="sendMessage()">Send Message →</button>
+          <span class="form-status" id="cf-status"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="footer-copy">© 2024 Redemption Makosa</span>
+    <span class="footer-built">Built with intention.</span>
+  </footer>
+
+  <script>
+    const API = 'https://your-api.vercel.app'; // ← REPLACE with your Vercel URL
+
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+    async function sendMessage() {
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const subject = document.getElementById('cf-subject').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const status  = document.getElementById('cf-status');
+      const btn     = document.getElementById('cf-submit');
+
+      if (!name || !email || !subject || !message) {
+        status.textContent = 'Please fill in all fields.';
+        status.className = 'form-status error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.textContent = '';
+
+      try {
+        const res = await fetch(`${API}/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+
+        if (res.ok) {
+          status.textContent = '✓ Message sent. I\'ll get back to you soon.';
+          status.className = 'form-status success';
+          ['cf-name','cf-email','cf-subject','cf-message'].forEach(id => document.getElementById(id).value = '');
+          btn.textContent = 'Sent ✓';
+        } else {
+          throw new Error('Server error');
+        }
+      } catch(e) {
+        status.textContent = 'Failed to send. Try emailing directly.';
+        status.className = 'form-status error';
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    }
+  </script>
+</body>
+</html>
