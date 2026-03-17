@@ -136,56 +136,58 @@
     <span class="footer-copy">© 2024 Redemption Makosa</span>
     <span class="footer-built">Built with intention.</span>
   </footer>
+<script>
+  const API = 'https://backend-production-ce5c3.up.railway.app';
 
-  <script>
-    const API = 'https://backend-production-ce5c3.up.railway.app'; // ← REPLACE with your Vercel URL
+  async function sendMessage() {
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const subject = document.getElementById('cf-subject').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    const status  = document.getElementById('cf-status');
+    const btn     = document.getElementById('cf-submit');
 
-    const nav = document.querySelector('.nav');
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
-
-    async function sendMessage() {
-      const name    = document.getElementById('cf-name').value.trim();
-      const email   = document.getElementById('cf-email').value.trim();
-      const subject = document.getElementById('cf-subject').value.trim();
-      const message = document.getElementById('cf-message').value.trim();
-      const status  = document.getElementById('cf-status');
-      const btn     = document.getElementById('cf-submit');
-
-      if (!name || !email || !subject || !message) {
-        status.textContent = 'Please fill in all fields.';
-        status.className = 'form-status error';
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      status.textContent = '';
-
-      try {
-        const res = await fetch(`${API}/contact`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, subject, message })
-        });
-
-        if (res.ok) {
-          status.textContent = '✓ Message sent. I\'ll get back to you soon.';
-          status.className = 'form-status success';
-          ['cf-name','cf-email','cf-subject','cf-message'].forEach(id => document.getElementById(id).value = '');
-          btn.textContent = 'Sent ✓';
-        } else {
-          throw new Error('Server error');
-        }
-      } catch(e) {
-        status.textContent = 'Failed to send. Try emailing directly.';
-        status.className = 'form-status error';
-        btn.disabled = false;
-        btn.textContent = 'Send Message →';
-      }
+    if (!name || !email || !subject || !message) {
+      status.textContent = 'Please fill in all fields.';
+      status.className = 'form-status error';
+      return;
     }
-    
 
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    status.textContent = '';
 
-  </script>
+    try {
+      const res = await fetch(`${API}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        status.textContent = '✓ Message sent. I\'ll get back to you soon.';
+        status.className = 'form-status success';
+        ['cf-name', 'cf-email', 'cf-subject', 'cf-message']
+          .forEach(id => document.getElementById(id).value = '');
+        btn.textContent = 'Sent ✓';
+      } else {
+        // Show the server's actual error in console so you can debug
+        console.error('Server error:', data);
+        throw new Error(data.detail || 'Server error');
+      }
+    } catch (e) {
+      console.error('Contact form error:', e);
+      status.textContent = 'Failed to send. Try emailing directly.';
+      status.className = 'form-status error';
+      btn.disabled = false;
+      btn.textContent = 'Send Message →';
+    }
+  }
+</script>
+
+  
+      
 </body>
 </html>
